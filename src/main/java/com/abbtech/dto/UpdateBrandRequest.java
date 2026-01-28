@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 
 import java.util.List;
 
-public record ReqBrandDto(
+public record UpdateBrandRequest(
         @NotBlank(message = "name can not be empty or null", groups = BrandGroupA.class) String name,
         String country,
         @Positive(message = "founded year must be positive")

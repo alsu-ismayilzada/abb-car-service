@@ -1,19 +1,17 @@
 package com.abbtech.controller;
 
-import com.abbtech.dto.ReqBrandDto;
-import com.abbtech.dto.RespBrandDto;
+import com.abbtech.dto.response.BrandResponse;
+import com.abbtech.dto.UpdateBrandRequest;
+import com.abbtech.dto.request.CreateCarRequest;
 import com.abbtech.service.BrandService;
-import com.abbtech.validation.BrandGroupA;
-import com.abbtech.validation.BrandGroupB;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/brands")
 public class BrandController {
 
     private final BrandService brandService;
@@ -22,25 +20,30 @@ public class BrandController {
         this.brandService = brandService;
     }
 
-    @GetMapping("/brands")
+    @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<RespBrandDto> getBrands() {
+    public List<BrandResponse> getBrands() {
         return brandService.getBrands();
     }
 
-    @GetMapping("/brands/by-id")
+    @GetMapping("/by-id")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public RespBrandDto getBrandById(@RequestParam(value = "id") Integer id) {
+    public BrandResponse getBrandById(@RequestParam(value = "id") Integer id) {
         return brandService.getBrandById(id);
     }
 
-    @PostMapping("/brands")
-    public void addBrand(@RequestBody @Validated(value = BrandGroupA.class) @Valid ReqBrandDto reqBrandDto) {
+    @PostMapping
+    public void addBrand(@RequestBody @Valid CreateCarRequest reqBrandDto) {
         brandService.addBrand(reqBrandDto);
     }
 
-    @PostMapping("/brands/groupb")
-    public void addBrandGroupB(@RequestBody @Validated(value = BrandGroupB.class) @Valid ReqBrandDto reqBrandDto) {
-        brandService.addBrand(reqBrandDto);
+    @PutMapping("/{brandId}")
+    public void updateBrand(@PathVariable Integer brandId, @RequestBody @Valid UpdateBrandRequest request) {
+        brandService.updateBrand(brandId, request);
+    }
+
+    @DeleteMapping("/{brandId}")
+    public void deleteById(@PathVariable Integer brandId){
+        brandService.deleteBrandById(brandId);
     }
 }

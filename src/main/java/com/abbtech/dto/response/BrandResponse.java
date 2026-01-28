@@ -1,8 +1,10 @@
-package com.abbtech.dto;
+package com.abbtech.dto.response;
+
+import com.abbtech.dto.ModelDto;
 
 import java.util.List;
 
-public record RespBrandDto(
+public record BrandResponse(
         Integer id,
         String name,
         String country,

@@ -1,8 +1,9 @@
 package com.abbtech.service;
 
 import com.abbtech.dto.ModelDto;
-import com.abbtech.dto.ReqBrandDto;
-import com.abbtech.dto.RespBrandDto;
+import com.abbtech.dto.UpdateBrandRequest;
+import com.abbtech.dto.response.BrandResponse;
+import com.abbtech.dto.request.CreateCarRequest;
 import com.abbtech.exception.CarErrorEnum;
 import com.abbtech.exception.CarException;
 import com.abbtech.model.Brand;
@@ -25,7 +26,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<RespBrandDto> getBrands() {
+    public List<BrandResponse> getBrands() {
         return brandRepository.findAll()
                 .stream()
                 .map(BrandServiceImpl::buildBrand)
@@ -35,7 +36,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional(readOnly = true)
-    public RespBrandDto getBrandById(int id) {
+    public BrandResponse getBrandById(int id) {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new CarException(CarErrorEnum.BRAND_NOT_FOUND));
         return buildBrand(brand);
@@ -43,13 +44,13 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional
-    public void addBrand(ReqBrandDto brandDto) {
+    public void addBrand(CreateCarRequest request) {
         var brand = Brand.builder()
-                .name(brandDto.name())
-                .country(brandDto.country())
-                .foundedYear(brandDto.foundedYear())
+                .name(request.name())
+                .country(request.country())
+                .foundedYear(request.foundedYear())
                 .build();
-        var models = brandDto.models().stream()
+        var models = request.models().stream()
                 .map(modelDto -> Model.builder()
                         .brand(brand)
                         .category(modelDto.category())
@@ -73,15 +74,15 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional
-    public void updateBrand(int id, ReqBrandDto brandDto) {
+    public void updateBrand(int id, UpdateBrandRequest request) {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new CarException(CarErrorEnum.BRAND_NOT_FOUND));
-        brand.setName(brandDto.name());
-        brand.setCountry(brandDto.country());
+        brand.setName(request.name());
+        brand.setCountry(request.country());
         brandRepository.save(brand);
     }
 
-    private static RespBrandDto buildBrand(Brand brand) {
+    private static BrandResponse buildBrand(Brand brand) {
         List<ModelDto> models = brand.getModels() == null
                 ? List.of()
                 : brand.getModels().stream()
@@ -95,7 +96,7 @@ public class BrandServiceImpl implements BrandService {
                 ))
                 .toList();
 
-        return new RespBrandDto(
+        return new BrandResponse(
                 brand.getId(),
                 brand.getName(),
                 brand.getCountry(),
