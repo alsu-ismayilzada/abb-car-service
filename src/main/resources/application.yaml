@@ -18,7 +18,7 @@ spring:
       schema: ${SCHEMA}
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -31,6 +31,9 @@ spring:
   threads:
     virtual:
       enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog.yaml
 
 course:
   name: ABB Tech Academy

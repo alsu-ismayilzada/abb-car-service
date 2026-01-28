@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - logicalFilePath: 20260123-1-create-tbl-permission.yaml
+  - changeSet:
+      id: 20260123-1-create-tbl-permission
+      author: alsu-ismayilzada
+      changes:
+        - createTable:
+            tableName: permission
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                  autoIncrement: true
+                  incrementBy: 1
+              - column:
+                  name: http_method
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path_pattern
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: permission_code
+                  type: varchar(100)
+                  constraints:
+                    nullable: false

@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - logicalFilePath: 20260123-1-create-car-feature-table.yaml
+  - changeSet:
+      id: 20260123-1-create-car-feature
+      author: alsu-ismayilzada
+      changes:
+        - createTable:
+            tableName: car_feature
+            columns:
+              - column:
+                  name: car_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: feature_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+        - addPrimaryKey:
+            tableName: car_feature
+            columnNames: car_id, feature_id
+            constraintName: pk_car_feature
+
+        - addForeignKeyConstraint:
+            baseTableName: car_feature
+            baseColumnNames: car_id
+            referencedTableName: car
+            referencedColumnNames: id
+            constraintName: fk_car_feature_car
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: car_feature
+            baseColumnNames: feature_id
+            referencedTableName: feature
+            referencedColumnNames: id
+            constraintName: fk_car_feature_feature
+            onDelete: CASCADE

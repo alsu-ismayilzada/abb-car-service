@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - logicalFilePath: 20260123-1-create-tbl-car-details.yaml
+  - changeSet:
+      id: 20260123-1-create-tbl-car-details
+      author: alsu-ismayilzada
+      changes:
+        - createTable:
+            tableName: car_details
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                  autoIncrement: true
+                  incrementBy: 1
+              - column:
+                  name: vin
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: engine_number
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: registration_code
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: fuel_type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: engine_capacity
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(255)
+              - column:
+                  name: insurance_number
+                  type: varchar(255)
+              - column:
+                  name: car_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    unique: true
+
+        - addForeignKeyConstraint:
+            baseColumnNames: car_id
+            baseTableName: car_details
+            constraintName: fk_car_details_car
+            referencedColumnNames: id
+            referencedTableName: car

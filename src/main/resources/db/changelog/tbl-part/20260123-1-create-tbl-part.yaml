@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - logicalFilePath: 20260123-1-create-tbl-part.yaml
+  - changeSet:
+      id: 20260123-1-create-tbl-part
+      author: alsu-ismayilzada
+      changes:
+        - createTable:
+            tableName: part
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                  autoIncrement: true
+                  incrementBy: 1
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: part_code
+                  type: varchar(255)
+              - column:
+                  name: description
+                  type: varchar(255)
+              - column:
+                  name: unit_price
+                  type: numeric(10,2)
+              - column:
+                  name: brand
+                  type: varchar(255)

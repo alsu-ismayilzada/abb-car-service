@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - logicalFilePath: 20260123-1-create-tbl-service_part.yaml
+  - changeSet:
+      id: 20260123-1-create-tbl-service_part
+      author: alsu-ismayilzada
+      changes:
+        - createTable:
+            tableName: service_part
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                  autoIncrement: true
+                  incrementBy: 1
+              - column:
+                  name: service_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: part_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: int
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseColumnNames: service_id
+            baseTableName: service_part
+            constraintName: fk_service_part_service_visit
+            referencedColumnNames: id
+            referencedTableName: service_visit
+
+        - addForeignKeyConstraint:
+            baseColumnNames: part_id
+            baseTableName: service_part
+            constraintName: fk_service_part_part
+            referencedColumnNames: id
+            referencedTableName: part
