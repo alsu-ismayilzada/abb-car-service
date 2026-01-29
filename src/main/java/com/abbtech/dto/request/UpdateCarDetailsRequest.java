@@ -1,7 +1,6 @@
-package com.abbtech.dto;
+package com.abbtech.dto.request;
 
-public record CarDetailsDto(
-        Integer id,
+public record UpdateCarDetailsRequest(
         String engineNumber,
         String registrationCode,
         String color,
@@ -10,4 +9,3 @@ public record CarDetailsDto(
         String engineCapacity
 ) {
 }
-

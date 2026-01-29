@@ -1,15 +1,14 @@
-package com.abbtech.dto;
+package com.abbtech.dto.request;
 
 import java.util.List;
 
-public record CarDto(
-        Integer id,
+public record UpdateCarRequest(
         String vin,
         String registrationNumber,
         Integer mileageKm,
         Integer productionYear,
         Integer modelId,
-        CarDetailsDto carDetails,
+        UpdateCarDetailsRequest carDetails,
         List<Integer> featureIds
 ) {
 }

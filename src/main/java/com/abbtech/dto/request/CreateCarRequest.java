@@ -1,19 +1,20 @@
 package com.abbtech.dto.request;
-
-import com.abbtech.dto.ModelDto;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
 public record CreateCarRequest (
-        @NotBlank(message = "name can not be empty or null") String name,
-        String country,
-        @Positive(message = "founded year must be positive")
-        @Min(1900)
-        @Max(2100)
-        Integer foundedYear,
-        @Size(min = 1, message = "at least one model is required,max=2", max = 2)
-        @Valid List<ModelDto> models
+        String vin,
+        @NotNull(message = "registration number can not be null")
+        String registrationNumber,
+        Integer mileageKm,
+        @NotNull(message = "production year can not be null")
+        Integer productionYear,
+        @NotNull(message = "model id can not be null")
+        Integer modelId,
+        @Valid
+        CreateCarDetailsRequest carDetails,
+        List<Integer> featureIds
 ) {
 }

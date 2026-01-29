@@ -2,7 +2,7 @@ package com.abbtech.controller;
 
 import com.abbtech.dto.response.BrandResponse;
 import com.abbtech.dto.UpdateBrandRequest;
-import com.abbtech.dto.request.CreateCarRequest;
+import com.abbtech.dto.request.CreateBrandRequest;
 import com.abbtech.service.BrandService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ public class BrandController {
     }
 
     @PostMapping
-    public void addBrand(@RequestBody @Valid CreateCarRequest reqBrandDto) {
+    public void addBrand(@RequestBody @Valid CreateBrandRequest reqBrandDto) {
         brandService.addBrand(reqBrandDto);
     }
 

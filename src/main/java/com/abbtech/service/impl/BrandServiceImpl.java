@@ -1,14 +1,15 @@
-package com.abbtech.service;
+package com.abbtech.service.impl;
 
 import com.abbtech.dto.ModelDto;
 import com.abbtech.dto.UpdateBrandRequest;
 import com.abbtech.dto.response.BrandResponse;
-import com.abbtech.dto.request.CreateCarRequest;
+import com.abbtech.dto.request.CreateBrandRequest;
 import com.abbtech.exception.CarErrorEnum;
 import com.abbtech.exception.CarException;
 import com.abbtech.model.Brand;
 import com.abbtech.model.Model;
 import com.abbtech.repository.BrandRepository;
+import com.abbtech.service.BrandService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +45,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional
-    public void addBrand(CreateCarRequest request) {
+    public void addBrand(CreateBrandRequest request) {
         var brand = Brand.builder()
                 .name(request.name())
                 .country(request.country())
