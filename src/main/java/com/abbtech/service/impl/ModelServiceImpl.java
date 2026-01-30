@@ -3,6 +3,10 @@ package com.abbtech.service.impl;
 import com.abbtech.dto.request.CreateModelRequest;
 import com.abbtech.dto.request.UpdateModelRequest;
 import com.abbtech.dto.response.ModelResponse;
+import com.abbtech.exception.CarErrorEnum;
+import com.abbtech.exception.CarException;
+import com.abbtech.exception.ModelErrorEnum;
+import com.abbtech.exception.ModelException;
 import com.abbtech.model.Brand;
 import com.abbtech.model.Model;
 import com.abbtech.repository.ModelRepository;
@@ -23,7 +27,7 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Model findById(Integer id) {
         return modelRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Model not found with id: " + id));
+                .orElseThrow(() -> new ModelException(ModelErrorEnum.MODEL_NOT_FOUND));
     }
 
     @Override
@@ -43,7 +47,7 @@ public class ModelServiceImpl implements ModelService {
     public void saveModel(Integer brandId, CreateModelRequest request) {
         var brand = brandService.getBrandById(brandId);
         if (brand == null) {
-            throw new RuntimeException("Brand not found with id: " + brandId);
+            throw new CarException(CarErrorEnum.BRAND_NOT_FOUND);
         }
         var model = buildModel(request, brand);
         modelRepository.save(model);

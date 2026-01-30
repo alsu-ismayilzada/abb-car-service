@@ -2,6 +2,8 @@ package com.abbtech.service.impl;
 
 import com.abbtech.dto.request.CreateFeatureRequest;
 import com.abbtech.dto.response.FeatureResponse;
+import com.abbtech.exception.FeatureErrorEnum;
+import com.abbtech.exception.FeatureException;
 import com.abbtech.model.Feature;
 import com.abbtech.repository.FeatureRepository;
 import com.abbtech.service.FeatureService;
@@ -21,7 +23,7 @@ public class FeatureServiceImpl implements FeatureService {
     @Override
     public FeatureResponse getFeatureById(Integer id) {
         Feature feature = featureRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Feature not found with id: " + id));
+                .orElseThrow(() -> new FeatureException(FeatureErrorEnum.FEATURE_NOT_FOUND));
 
         return buildFeatureResponse(feature);
     }

@@ -1,7 +1,7 @@
 package com.abbtech.service.impl;
 
 import com.abbtech.dto.ModelDto;
-import com.abbtech.dto.UpdateBrandRequest;
+import com.abbtech.dto.request.UpdateBrandRequest;
 import com.abbtech.dto.response.BrandResponse;
 import com.abbtech.dto.request.CreateBrandRequest;
 import com.abbtech.exception.CarErrorEnum;
@@ -85,6 +85,7 @@ public class BrandServiceImpl implements BrandService {
                 .orElseThrow(() -> new CarException(CarErrorEnum.BRAND_NOT_FOUND));
         brand.setName(request.name());
         brand.setCountry(request.country());
+        brand.setFoundedYear(request.foundedYear());
         brandRepository.save(brand);
     }
 
