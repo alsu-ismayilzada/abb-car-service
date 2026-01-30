@@ -1,5 +1,7 @@
 package com.abbtech.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,5 +45,6 @@ public class Car {
             joinColumns = @JoinColumn(name = "car_id"),
             inverseJoinColumns = @JoinColumn(name = "feature_id")
     )
+    @JsonBackReference
     private List<Feature> features;
 }

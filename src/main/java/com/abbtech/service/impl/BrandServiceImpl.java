@@ -26,6 +26,12 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public Brand getBrandById(int id) {
+        return brandRepository.findById(id)
+                .orElseThrow(() -> new CarException(CarErrorEnum.BRAND_NOT_FOUND));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<BrandResponse> getBrands() {
         return brandRepository.findAll()
@@ -37,9 +43,8 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional(readOnly = true)
-    public BrandResponse getBrandById(int id) {
-        Brand brand = brandRepository.findById(id)
-                .orElseThrow(() -> new CarException(CarErrorEnum.BRAND_NOT_FOUND));
+    public BrandResponse getBrandResponseById(int id) {
+        var brand = getBrandById(id);
         return buildBrand(brand);
     }
 

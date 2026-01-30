@@ -1,5 +1,7 @@
 package com.abbtech.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +32,7 @@ public class Feature {
     @Column(length = 255)
     private String category;
 
-    // Optional reverse mapping
     @ManyToMany(mappedBy = "features", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Car> cars;
 }

@@ -29,7 +29,7 @@ public class BrandController {
     @GetMapping("/by-id")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public BrandResponse getBrandById(@RequestParam(value = "id") Integer id) {
-        return brandService.getBrandById(id);
+        return brandService.getBrandResponseById(id);
     }
 
     @PostMapping

@@ -14,6 +14,6 @@ public record CarResponse (
         Integer productionYear,
         Integer modelId,
         CarDetailsResponse carDetails,
-        List<Feature> features
+        List<FeatureResponse> features
 ) {
 }

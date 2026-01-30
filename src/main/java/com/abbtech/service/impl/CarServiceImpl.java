@@ -2,12 +2,16 @@ package com.abbtech.service.impl;
 
 import com.abbtech.dto.request.CreateCarRequest;
 import com.abbtech.dto.request.UpdateCarRequest;
+import com.abbtech.dto.response.CarDetailsResponse;
 import com.abbtech.dto.response.CarResponse;
+import com.abbtech.dto.response.FeatureResponse;
 import com.abbtech.model.Car;
 import com.abbtech.model.CarDetails;
+import com.abbtech.model.Feature;
 import com.abbtech.model.Model;
 import com.abbtech.repository.CarRepository;
 import com.abbtech.service.CarService;
+import com.abbtech.service.FeatureService;
 import com.abbtech.service.ModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,7 @@ public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
     private final ModelService modelService;
+    private final FeatureService featureService;
 
     private Car findById(Integer id) {
         return carRepository.findById(id)
@@ -47,6 +52,11 @@ public class CarServiceImpl implements CarService {
     public void saveCar(CreateCarRequest request) {
         var carDetails = buildCarDetails(request);
         var car = buildCar(request, carDetails);
+        if (request.featureIds() != null && !request.featureIds().isEmpty()) {
+            List<Feature> features =
+                    featureService.findAllById(request.featureIds());
+            car.setFeatures(features);
+        }
         carDetails.setCar(car);
         carRepository.save(car);
     }
@@ -88,7 +98,10 @@ public class CarServiceImpl implements CarService {
                 .mileageKm(car.getMileageKm())
                 .productionYear(car.getProductionYear())
                 .modelId(car.getModel().getId())
-                .features(car.getFeatures())// todo FeatureResponse
+                .features(car.getFeatures().stream()
+                        .map(this::buildFeatureResponse)
+                        .toList())
+                .carDetails(buildCarDetailsResponse(car.getCarDetails()))
                 .build();
     }
 
@@ -113,6 +126,28 @@ public class CarServiceImpl implements CarService {
                 .fuelType(carDetailsRequest.fuelType())
                 .insuranceNumber(carDetailsRequest.insuranceNumber())
                 .registrationCode(carDetailsRequest.registrationCode())
+                .build();
+    }
+
+    CarDetailsResponse buildCarDetailsResponse(CarDetails carDetails){
+        return CarDetailsResponse.builder()
+                .id(carDetails.getId())
+                .color(carDetails.getColor())
+                .engineCapacity(carDetails.getEngineCapacity())
+                .engineNumber(carDetails.getEngineNumber())
+                .fuelType(carDetails.getFuelType())
+                .insuranceNumber(carDetails.getInsuranceNumber())
+                .registrationCode(carDetails.getRegistrationCode())
+                .build();
+    }
+
+    FeatureResponse buildFeatureResponse(Feature feature){
+        return FeatureResponse.builder()
+                .id(feature.getId())
+                .featureId(feature.getFeatureId())
+                .name(feature.getName())
+                .description(feature.getDescription())
+                .category(feature.getCategory())
                 .build();
     }
 }

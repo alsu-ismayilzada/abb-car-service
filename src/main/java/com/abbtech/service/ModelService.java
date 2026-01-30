@@ -12,7 +12,7 @@ public interface ModelService {
     Model findById(Integer id);
     ModelResponse getModelById(Integer id);
     List<ModelResponse> getAllModels();
-    void saveModel(CreateModelRequest request);
+    void saveModel(Integer brandId, CreateModelRequest request);
     void updateModel(Integer id, UpdateModelRequest request);
     void deleteModelById(Integer id);
 
