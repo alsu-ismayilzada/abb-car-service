@@ -1,5 +1,6 @@
 package com.abbtech.dto.request;
 
+import com.abbtech.annotations.LogIgnore;
 import com.abbtech.dto.ModelDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -14,6 +15,7 @@ public record CreateBrandRequest(
         @Max(2100)
         Integer foundedYear,
         @Size(min = 1, message = "at least one model is required,max=2", max = 2)
+        @LogIgnore
         @Valid List<ModelDto> models
 ) {
 }

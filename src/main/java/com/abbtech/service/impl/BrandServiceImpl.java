@@ -1,5 +1,6 @@
 package com.abbtech.service.impl;
 
+import com.abbtech.annotations.SpringTransactionAnnotation;
 import com.abbtech.dto.ModelDto;
 import com.abbtech.dto.request.UpdateBrandRequest;
 import com.abbtech.dto.response.BrandResponse;
@@ -26,6 +27,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @SpringTransactionAnnotation
     public Brand getBrandById(int id) {
         return brandRepository.findById(id)
                 .orElseThrow(() -> new CarException(CarErrorEnum.BRAND_NOT_FOUND));
@@ -33,6 +35,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional(readOnly = true)
+    @SpringTransactionAnnotation
     public List<BrandResponse> getBrands() {
         return brandRepository.findAll()
                 .stream()
