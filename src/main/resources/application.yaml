@@ -44,3 +44,7 @@ course:
     country: CountryName
     city: CityName
 
+jwt:
+  secret:  Vx9b+RkLZQ2s8pC2m7uE2yH9aRZkXnqM2XzL5A==
+  access-exp: 3600000
+  refresh-exp: 86400000

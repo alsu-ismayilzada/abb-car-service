@@ -1,4 +1,4 @@
-package com.abbtech.security;
+package com.abbtech.security.service;
 
 import com.abbtech.dto.security.RegisterRequestDto;
 import com.abbtech.exception.AuthErrorEnum;

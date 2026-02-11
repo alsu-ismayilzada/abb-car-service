@@ -7,7 +7,7 @@ import com.abbtech.dto.security.TokenResponseDto;
 import com.abbtech.exception.AuthErrorEnum;
 import com.abbtech.exception.AuthException;
 import com.abbtech.security.JwtService;
-import com.abbtech.security.RegisterService;
+import com.abbtech.security.service.RegisterService;
 import com.abbtech.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class AuthController {
     @PostMapping("/login")
     public TokenResponseDto login(@RequestBody LoginRequestDto req) {
         Authentication auth =
-                manager.authenticate(new UsernamePasswordAuthenticationToken(req.username(), req.password()));
+                manager.authenticate(new UsernamePasswordAuthenticationToken(req.getUsername(), req.getPassword()));
         UserDetails user = (UserDetails) auth.getPrincipal();
         return new TokenResponseDto(jwt.accessToken(user), jwt.refreshToken(user));
     }
